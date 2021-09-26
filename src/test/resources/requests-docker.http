@@ -1,6 +1,6 @@
 ###
 
-https://server.local:8443/cards.getAll
+https://localhost:8443/cards.getAll
 Authorization: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==
 
 > {%
@@ -10,7 +10,7 @@ client.test("Request executed successfully", function() {
 %}
 
 ###
-POST https://server.local:8443/rest/users/register
+POST https://localhost:8443/rest/users/register
 Content-Type: application/json
 
 {
@@ -27,7 +27,7 @@ client.test("Request executed successfully", function() {
 
 ###
 
-https://server.local:8443/cards.getAll
+https://localhost:8443/cards.getAll
 Authorization: {{registration_token}}
 
 > {%
@@ -38,7 +38,7 @@ client.test("Request executed successfully", function() {
 
 ###
 
-POST https://server.local:8443/rest/users/login
+POST https://localhost:8443/rest/users/login
 Content-Type: application/json
 
 {
@@ -55,7 +55,7 @@ client.test("Request executed successfully", function() {
 
 ###
 
-https://server.local:8443/cards.getAll
+https://localhost:8443/cards.getAll
 Authorization: {{login_token}}
 
 > {%
