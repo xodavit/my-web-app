@@ -33,12 +33,12 @@ public class CardHandler { // Servlet -> Controller -> Service (domain) -> domai
     }
   }
 
-  public void getById(HttpServletRequest req, HttpServletResponse resp) {
-    final var cardId = Long.parseLong(((Matcher) req.getAttribute(RequestAttributes.PATH_MATCHER_ATTR)).group("cardId"));
+  public void getCardById(HttpServletRequest req, HttpServletResponse resp) {
     log.log(Level.INFO, "getById");
   }
 
-  public void order(HttpServletRequest req, HttpServletResponse resp) {
+  public void transferMoneyToAnotherYourselfCard(HttpServletRequest req, HttpServletResponse resp) {
+    log.log(Level.INFO, "transferMoneyToAnotherYourselfCard");
   }
 
   public void blockById(HttpServletRequest req, HttpServletResponse resp) {

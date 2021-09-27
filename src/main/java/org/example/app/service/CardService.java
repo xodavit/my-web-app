@@ -13,4 +13,16 @@ public class CardService {
   public List<Card> getAllByOwnerId(long ownerId) {
     return cardRepository.getAllByOwnerId(ownerId);
   }
+  public void getCardById(){
+
+  }
+  public void getCardByNumber(){
+
+  }
+  public void transferMoneyToAnotherYourselfCard(){
+
+  }
+  public void blockById(){
+
+  }
 }
