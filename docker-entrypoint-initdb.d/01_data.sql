@@ -24,3 +24,11 @@ VALUES (1, 1, '**** *111', 150000),
        (8, 4, '**** *445', 142000);
 
 ALTER SEQUENCE cards_id_seq RESTART WITH 9;
+
+INSERT INTO news(title, text, created)
+VALUES ('news 1', 'aaaaaaaaaaaaaaa', '2021-06-03 15:46:13.480253 +03:00'),
+       ('news 2', 'bbbbbbbbbbbbbbb', '2021-07-15 05:36:17.720154 +03:00'),
+       ('news 3', 'ccccccccccccccc', '2021-08-27 14:56:08.330143 +03:00'),
+       ('news 4', 'ddddddddddddddd', '2021-09-03 08:16:24.150143 +03:00');
+
+
