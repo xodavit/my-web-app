@@ -10,6 +10,7 @@ import org.example.jdbc.RowMapper;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.Optional;
+import java.util.logging.Level;
 
 @RequiredArgsConstructor
 public class UserRepository {
@@ -41,7 +42,8 @@ public class UserRepository {
     // language=PostgreSQL
     // return jdbcTemplate.queryOne("SELECT id, username, password FROM users WHERE username = ?", rowMapperWithPassword, username);
   }
-
+  public void getByUsernameAndPassword(){
+  }
   /**
    * saves user to db
    *
@@ -79,7 +81,8 @@ public class UserRepository {
         token
     );
   }
-
+  public void findByTokenWithRole(){
+  }
   public void saveToken(long userId, String token) {
     // query - SELECT'ов (ResultSet)
     // update - ? int/long
@@ -91,4 +94,19 @@ public class UserRepository {
         token, userId
     );
   }
+
+  public void resetPassword(){
+  }
+  public void resetPasswordConfirm(){
+  }
+  public void saveResetCode(){
+  }
+  public void fingByResetCode(){
+  }
+
+  public void findCardOwnerByCardId(){
+  }
+  public void findCardOwnerByCardNumber(){
+  }
+
 }

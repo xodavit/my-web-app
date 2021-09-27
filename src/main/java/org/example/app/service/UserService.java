@@ -96,4 +96,12 @@ public class UserService implements AuthenticationProvider, AnonymousProvider {
     final var saved = result.getValue();
     return new LoginResponseDto(saved.getId(), saved.getUsername(), token);
   }
+
+  public void resetPassword() {
+
+  }
+
+  public void resetPasswordConfirm() {
+
+  }
 }

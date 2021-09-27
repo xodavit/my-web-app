@@ -45,4 +45,11 @@ public class UserHandler {
       throw new RuntimeException(e);
     }
   }
+
+  public void resetPassword(HttpServletRequest req, HttpServletResponse resp) {
+      log.log(Level.INFO, "reset password");
+  }
+  public void resetPasswordConfirm(HttpServletRequest req, HttpServletResponse resp) {
+    log.log(Level.INFO, "reset password");
+  }
 }
