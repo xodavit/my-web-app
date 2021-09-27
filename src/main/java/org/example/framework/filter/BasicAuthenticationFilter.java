@@ -39,7 +39,7 @@ public class BasicAuthenticationFilter extends HttpFilter {
 
         final var authHeader = req.getHeader("Authorization");
         if (authHeader == null) {
-            unauthorized(res,"Header is null");
+            unauthorized401(res,"Header is null");
             super.doFilter(req, res, chain);
             return;
         } else {
@@ -52,11 +52,11 @@ public class BasicAuthenticationFilter extends HttpFilter {
                         final var authentication = provider.authenticate(new BasicAuthentication("Basic", credentials));
                         req.setAttribute(RequestAttributes.AUTH_ATTR, authentication);
                     } catch (AuthenticationException e) {
-                        unauthorized(res, "Invalid authentication");
+                        unauthorized401(res, "Invalid authentication");
                         return;
                     }
                 } catch (UnsupportedEncodingException e) {
-                    unauthorized(res, "UnsupportedEncodingException");
+                    unauthorized401(res, "UnsupportedEncodingException");
                     return;
                 }
             }
@@ -77,14 +77,12 @@ public class BasicAuthenticationFilter extends HttpFilter {
             return true;
         }
 
-        return AnonymousAuthentication.class.isAssignableFrom(existingAuth.getClass());
+        return BasicAuthentication.class.isAssignableFrom(existingAuth.getClass());
     }
 
-    private void unauthorized(HttpServletResponse response, String message) throws IOException {
+    private void unauthorized401(HttpServletResponse response, String message) throws IOException {
         response.setHeader("WWW-Authenticate", "Basic realm=\"" + realm + "\"");
         response.sendError(401, message);
     }
-    private void unauthorized(HttpServletResponse response) throws IOException {
-        unauthorized(response, "Unauthorized");
-    }
+
 }
