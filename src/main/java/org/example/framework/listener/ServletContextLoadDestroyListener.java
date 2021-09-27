@@ -4,14 +4,16 @@ import com.google.gson.Gson;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.ServletSecurity;
-import jakarta.servlet.annotation.WebListener;
-import jdk.jfr.Percentage;
 import org.example.app.handler.CardHandler;
+import org.example.app.handler.IndexPageHandler;
+import org.example.app.handler.NewsHandler;
 import org.example.app.handler.UserHandler;
 import org.example.app.jpa.JpaTransactionTemplate;
 import org.example.app.repository.CardRepository;
+import org.example.app.repository.NewsRepository;
 import org.example.app.repository.UserRepository;
 import org.example.app.service.CardService;
+import org.example.app.service.NewsService;
 import org.example.app.service.UserService;
 import org.example.framework.attribute.ContextAttributes;
 import org.example.framework.servlet.Handler;
@@ -59,7 +61,15 @@ public class ServletContextLoadDestroyListener implements ServletContextListener
       final var cardService = new CardService(cardRepository);
       final var cardHandler = new CardHandler(cardService, gson);
 
+      final var newsRepository = new NewsRepository(jdbcTemplate);
+      final var newsService = new NewsService(newsRepository);
+      final var newsHandler = new NewsHandler(newsService, gson);
+      final var indexPageHandler = new IndexPageHandler(gson);
+
       final var routes = Map.<Pattern, Map<String, Handler>>of(
+          Pattern.compile("/"), Map.of(GET, indexPageHandler::getMainPage),
+          Pattern.compile("/news"), Map.of(GET, newsHandler::getAllNews),
+          Pattern.compile("/news.add"), Map.of(GET, newsHandler::addNews),
           Pattern.compile("/cards.getAll"), Map.of(GET, cardHandler::getAll),
           Pattern.compile("/cards.getById"), Map.of(GET, cardHandler::getById),
           Pattern.compile("/cards.order"), Map.of(POST, cardHandler::order),

@@ -1,3 +1,36 @@
 ### localhost:8080/
+#GET http://localhost:8080/
+#Content-Type: application/json
 
-GET http://localhost:8080/
+###
+GET https://localhost:8443/api/
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+###
+
+GET https://localhost:8443/api/news
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+###
+
+GET https://localhost:8443/api/news.add
+Content-Type: application/json
+
+{
+  "title": {{$uuid}},
+  "text": {{$uuid}}
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}

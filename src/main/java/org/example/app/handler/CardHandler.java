@@ -22,6 +22,7 @@ public class CardHandler { // Servlet -> Controller -> Service (domain) -> domai
 
   public void getAll(HttpServletRequest req, HttpServletResponse resp) {
     try {
+      log.log(Level.INFO, "getAll");
       // cards.getAll?ownerId=1
       final var user = UserHelper.getUser(req);
       final var data = service.getAllByOwnerId(user.getId());
@@ -41,5 +42,6 @@ public class CardHandler { // Servlet -> Controller -> Service (domain) -> domai
   }
 
   public void blockById(HttpServletRequest req, HttpServletResponse resp) {
+    log.log(Level.INFO, "blockById");
   }
 }
