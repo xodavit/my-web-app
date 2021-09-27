@@ -1,14 +1,13 @@
 package org.example.app.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.example.app.domain.User;
 import org.example.app.domain.UserWithPassword;
-import org.example.app.dto.LoginRequestDto;
-import org.example.app.dto.LoginResponseDto;
-import org.example.app.dto.RegistrationRequestDto;
-import org.example.app.dto.RegistrationResponseDto;
+import org.example.app.dto.*;
 import org.example.app.exception.PasswordNotMatchesException;
 import org.example.app.exception.RegistrationException;
+import org.example.app.exception.UnsupportedPasswordResetConfirmException;
 import org.example.app.exception.UserNotFoundException;
 import org.example.app.jpa.JpaTransactionTemplate;
 import org.example.app.repository.UserRepository;
@@ -20,7 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.List;
-
+import java.util.logging.Level;
+@Log
 @RequiredArgsConstructor
 public class UserService implements AuthenticationProvider, AnonymousProvider {
   private final UserRepository repository;
@@ -97,11 +97,21 @@ public class UserService implements AuthenticationProvider, AnonymousProvider {
     return new LoginResponseDto(saved.getId(), saved.getUsername(), token);
   }
 
-  public void resetPassword() {
-
+  public int resetPassword(User user, PasswordResetRequestDto requestDto) {
+    final var username = user.getUsername().trim().toLowerCase();
+    final var password = requestDto.getNewPassword().trim();
+    final var encodedPassword = passwordEncoder.encode(password);
+    //FIXME ***
+    log.log(Level.INFO, encodedPassword);
+    return repository.resetPassword(username, encodedPassword);
   }
 
-  public void resetPasswordConfirm() {
-
+  public int resetPasswordConfirm(PasswordResetConfirmRequestDto requestDto) {
+    final var resetCodeInDB = repository.fingByResetCode(requestDto.getCode());
+    if (resetCodeInDB.isPresent() && !resetCodeInDB.get().isActive() && resetCodeInDB.get().getUsername().equals(requestDto.getUsername())) {
+      return repository.resetPasswordConfirm(requestDto.getUsername(), requestDto.getCode());
+    } else {
+      throw new UnsupportedPasswordResetConfirmException("Can`t confirm because code was wrong");
+    }
   }
 }
