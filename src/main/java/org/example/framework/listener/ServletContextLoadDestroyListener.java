@@ -58,7 +58,7 @@ public class ServletContextLoadDestroyListener implements ServletContextListener
       final var userHandler = new UserHandler(userService, gson);
 
       final var cardRepository = new CardRepository(jdbcTemplate);
-      final var cardService = new CardService(cardRepository);
+      final var cardService = new CardService(cardRepository, userRepository);
       final var cardHandler = new CardHandler(cardService, gson);
 
       final var newsRepository = new NewsRepository(jdbcTemplate);
@@ -71,12 +71,18 @@ public class ServletContextLoadDestroyListener implements ServletContextListener
           Pattern.compile("/news.getAll"), Map.of(GET, newsHandler::getAllNews),
           Pattern.compile("/news.add"), Map.of(GET, newsHandler::addNews),
           Pattern.compile("/cards.getAll"), Map.of(GET, cardHandler::getAll),
-          Pattern.compile("/cards.getById"), Map.of(GET, cardHandler::getCardById),
+          Pattern.compile("^/cards.getById/(?<cardId>\\d+)$"), Map.of(GET, cardHandler::getCardById),
           Pattern.compile("/cards.order"), Map.of(POST, cardHandler::transferMoneyToAnotherYourselfCard),
-          Pattern.compile("/cards.blockById"), Map.of(DELETE, cardHandler::blockById),
+          //Pattern.compile("^/cards.blockById/(?<cardId>\\d+)$"), Map.of(DELETE, cardHandler::blockById),
           Pattern.compile("^/rest/cards/(?<cardId>\\d+)$"), Map.of(GET, cardHandler::getCardById),
+
+          Pattern.compile("/rest/users/password.reset"), Map.of(POST, userHandler::resetPassword),
+         // Pattern.compile("/rest/users/password.reset.confirm"), Map.of(POST, userHandler::resetPasswordConfirm),
+
           Pattern.compile("^/rest/users/register$"), Map.of(POST, userHandler::register),
           Pattern.compile("^/rest/users/login$"), Map.of(POST, userHandler::login)
+
+
       );
       context.setAttribute(ContextAttributes.ROUTES_ATTR, routes);
 
