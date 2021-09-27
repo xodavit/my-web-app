@@ -7,8 +7,8 @@ VALUES (1, 'admin', '$argon2id$v=19$m=4096,t=3,p=1$CjM/3pdG9sYDzxGFDbesMA$HA1Fm8
 ALTER SEQUENCE users_id_seq RESTART WITH 5;
 
 INSERT INTO tokens(token, "userId")
-VALUES ('6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==', 1);
-VALUES ('PgKam1JWhAvmaZT06RkRgay0E08jOOYC2YbDuIsbg+3ATgEvrDit6idDYIKi6vc8m/XdSWseDX9vMvwWewhaXw==', 2);
+VALUES ('6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==', 1),
+       ('PgKam1JWhAvmaZT06RkRgay0E08jOOYC2YbDuIsbg+3ATgEvrDit6idDYIKi6vc8m/XdSWseDX9vMvwWewhaXw==', 2);
 
 
 INSERT INTO cards(id, "ownerId", number, balance)
