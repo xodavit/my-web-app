@@ -13,15 +13,26 @@ CREATE TABLE tokens
     "userId" BIGINT      NOT NULL REFERENCES users,
     created  timestamptz NOT NULL DEFAULT current_timestamp
 );
-CREATE TABLE registration_attempts
+
+CREATE TABLE reset_codes
 (
     id       BIGSERIAL PRIMARY KEY,
+    code     TEXT        NOT NULL UNIQUE,
+    username TEXT        NOT NULL,
+    password TEXT        NOT NULL,
+    active   BOOLEAN     NOT NULL DEFAULT FALSE,
+    created  timestamptz NOT NULL DEFAULT current_timestamp
+);
+
+CREATE TABLE registration_attempts
+(
+    id       BIGSERIAL   PRIMARY KEY,
     username TEXT        NOT NULL UNIQUE,
     created  timestamptz NOT NULL DEFAULT current_timestamp
 );
 CREATE TABLE login_attempts
 (
-    id       BIGSERIAL PRIMARY KEY,
+    id       BIGSERIAL   PRIMARY KEY,
     username TEXT        NOT NULL UNIQUE,
     created  timestamptz NOT NULL DEFAULT current_timestamp
 );
@@ -36,7 +47,7 @@ CREATE TABLE cards
 CREATE TABLE news
 (
     id        BIGSERIAL PRIMARY KEY,
-    title     TEXT    NOT NULL UNIQUE,
-    text      TEXT    NOT NULL UNIQUE,
+    title     TEXT      NOT NULL UNIQUE,
+    text      TEXT      NOT NULL UNIQUE,
     created timestamptz NOT NULL DEFAULT current_timestamp
 );
