@@ -8,7 +8,9 @@ ALTER SEQUENCE users_id_seq RESTART WITH 5;
 
 INSERT INTO tokens(token, "userId")
 VALUES ('6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==', 1),
-       ('PgKam1JWhAvmaZT06RkRgay0E08jOOYC2YbDuIsbg+3ATgEvrDit6idDYIKi6vc8m/XdSWseDX9vMvwWewhaXw==', 2);
+       ('PgKam1JWhAvmaZT06RkRgay0E08jOOYC2YbDuIsbg+3ATgEvrDit6idDYIKi6vc8m/XdSWseDX9vMvwWewhaXw==', 2),
+       ('hp2dqW7TyVkXP34ieOjtBYbBJ7K0TOn8FsyC5RfUysUoEmhomH4UoCilK09Ttt/oNu0bGU2vTW9G4Si9iT261w==', 3),
+       ('51yCM3QXCUvLBLQy7Eo6GUYLq17iy/kxBmI5HikOcvtqJzMefB+kJWBpM2UaoKHvuj0eCxAEKqoMDyJ90Le2mA==', 4);
 
 
 INSERT INTO cards(id, "ownerId", number, balance)
