@@ -55,6 +55,8 @@ public class ServletContextLoadDestroyListener implements ServletContextListener
       final var userService = new UserService(userRepository, jpaTransactionTemplate, passwordEncoder, keyGenerator);
       context.setAttribute(ContextAttributes.AUTH_PROVIDER_ATTR, userService);
       context.setAttribute(ContextAttributes.ANON_PROVIDER_ATTR, userService);
+      context.setAttribute(ContextAttributes.BASIC_PROVIDER_ATTR, userService);
+
       final var userHandler = new UserHandler(userService, gson);
 
       final var cardRepository = new CardRepository(jdbcTemplate);
