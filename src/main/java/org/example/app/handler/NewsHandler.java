@@ -32,7 +32,7 @@ public class NewsHandler {
     public void addNews(HttpServletRequest req, HttpServletResponse resp) {
         try {
             log.log(Level.INFO, "add new News");
-            final var requestDto = gson.fromJson(req.getReader(), org.example.app.dto.NewsRequestDto.class);
+            final var requestDto = gson.fromJson(req.getReader(), NewsRequestDto.class);
             final var responseDto = newsService.addNews(requestDto);
             resp.setHeader("Content-Type", "application/json");
             resp.getWriter().write(gson.toJson(responseDto));
