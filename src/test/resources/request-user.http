@@ -1,0 +1,56 @@
+###
+# user token
+GET https://localhost:8443/api/cards.getAll
+Authorization: 51yCM3QXCUvLBLQy7Eo6GUYLq17iy/kxBmI5HikOcvtqJzMefB+kJWBpM2UaoKHvuj0eCxAEKqoMDyJ90Le2mA==
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
+POST https://localhost:8443/api/rest/users/login
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "pass"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.global.set("login_token", response.body.token);
+});
+%}
+
+###
+
+GET https://localhost:8443/api/cards.getAll
+Authorization: {{login_token}}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+
+###
+# Registration
+# HTTP Status 500 – Internal Server Error
+POST https://localhost:8443/api/rest/users/register
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "user"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 500, "Response status is not 500");
+  client.global.set("registration_token", response.body.token);
+});
+%}

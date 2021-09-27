@@ -1,0 +1,40 @@
+###
+# HTTP Status 401 – Unauthorized
+GET https://localhost:8443/api/cards.getAll
+Authorization:
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 401, "Response status is not 401");
+});
+%}
+
+
+###
+# Registration ok
+POST https://localhost:8443/api/rest/users/register
+Content-Type: application/json
+
+{
+  "username": {{$uuid}},
+  "password": "password"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.global.set("registration_token", response.body.token);
+});
+%}
+
+### acsess ok
+
+GET https://localhost:8443/api/cards.getAll
+Authorization: {{registration_token}}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+

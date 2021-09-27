@@ -1,0 +1,55 @@
+###
+# admin token hardcode
+GET https://localhost:8443/api/cards.getAll
+Authorization: 6NSb+2kcdKF44ut4iBu+dm6YLu6pakWapvxHtxqaPgMr5iRhox/HlhBerAZMILPjwnRtXms+zDfVTLCsao9nuw==
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
+POST https://localhost:8443/api/rest/users/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "god"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+  client.global.set("login_token", response.body.token);
+});
+%}
+
+###
+
+GET https://localhost:8443/api/cards.getAll
+Authorization: {{login_token}}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
+# Registration
+# HTTP Status 500 – Internal Server Error
+POST https://localhost:8443/api/rest/users/register
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 500, "Response status is not 500");
+  client.global.set("registration_token", response.body.token);
+});
+%}
